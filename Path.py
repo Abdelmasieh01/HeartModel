@@ -28,6 +28,53 @@ class Path:
             "path_slope": path_float_parameters[7]
         }
 
+    # Getter methods
+    def getParameters(self):
+        return self._path_para
+
+    # Setter methods
+    def setParameters(self, parameters) -> None:
+        self._path_para = parameters
+
+    def setPathName(self, path_name: str) -> None:
+        self._path_para.path_name = path_name
+
+    def setPathStateIndex(self, path_state_index) -> None:
+        self._path_para.path_state_index = path_state_index
+
+    def setEntryNodeIndex(self, entry_node_index: int) -> None:
+        self._path_para.entry_node_index = entry_node_index
+
+    def setExitNodeIndex(self, exit_node_index: int) -> None:
+        self._path_para.exit_node_index = exit_node_index
+
+    def setAmplitudeFactor(self, amplitude_factor: int) -> None:
+        self._path_para.amplitude_factor = amplitude_factor
+
+    def setForwardSpeed(self, forward_speed: float) -> None:
+        self._path_para.forward_speed = forward_speed
+
+    def setBackwardSpeed(self, backward_speed: float) -> None:
+        self._path_para.backward_speed = backward_speed
+
+    def setForwardTimerCurrent(self, forward_timer_current: float) -> None:
+        self._path_para.forward_timer_current = forward_timer_current
+
+    def setForwardTimerDefault(self, forward_timer_default: float) -> None:
+        self._path_para.forward_timer_default = forward_timer_default
+
+    def setBackwardTimerCurrent(self, backward_timer_current: float) -> None:
+        self._path_para.backward_timer_current = backward_timer_current
+
+    def setBackwardTimerDefault(self, backward_timer_default: float) -> None:
+        self._path_para.backward_timer_default = backward_timer_default
+
+    def setPathLength(self, path_length: float) -> None:
+        self._path_para.path_length = path_length
+
+    def setPathSlope(self, path_slope: float) -> None:
+        self._path_para.path_slope = path_slope
+
     def path_automaton(self, NT):
         temp_node1_activation = False
         temp_node2_activation = False
@@ -37,27 +84,27 @@ class Path:
         entry_node = NT.node_table[entry_node_index]
         exit_node = NT.node_table[exit_node_index]
 
-        if self._path_para["path_state_index"] == IDLE: 
+        if self._path_para["path_state_index"] == IDLE:
             if entry_node._node_para["activation"]:
                 # Antegrade conduction
                 self._path_para["path_state_index"] = ANTEGRADE
             elif exit_node._node_para["activation"]:
-                self._path_para["path_state_index"] = RETROGRADE 
+                self._path_para["path_state_index"] = RETROGRADE
 
-        elif self._path_para["path_state_index"] == ANTEGRADE:  
+        elif self._path_para["path_state_index"] == ANTEGRADE:
             if exit_node._node_para["activation"]:
-                self._path_para["path_state_index"] = DOUBLE  
+                self._path_para["path_state_index"] = DOUBLE
             else:
                 if self._path_para["forward_timer_current"] == 0:
                     self._path_para["forward_timer_current"] = self._path_para["forward_timer_default"]
                     temp_node2_activation = True
-                    self._path_para["path_state_index"] = CONFLICT  
+                    self._path_para["path_state_index"] = CONFLICT
                 else:
                     self._path_para["forward_timer_current"] -= 1
 
-        elif self._path_para["path_state_index"] == RETROGRADE:  
+        elif self._path_para["path_state_index"] == RETROGRADE:
             if entry_node._node_para["activation"]:
-                self._path_para["path_state_index"] = DOUBLE  
+                self._path_para["path_state_index"] = DOUBLE
             else:
                 if self._path_para["backward_timer_current"] == 0:
                     self._path_para["backward_timer_current"] = self._path_para["backward_timer_default"]

@@ -8,6 +8,7 @@ ERP = 2
 
 class Heart:
     instance = None
+
     def __init__(self, h_node_names, h_node_int_parameters, h_node_positions, h_path_names, h_path_integer_parameters, h_path_float_parameters):
         self.m_path_table = PathTable(
             h_path_names, h_path_integer_parameters, h_path_float_parameters)
@@ -20,6 +21,20 @@ class Heart:
             Heart.instance = Heart(Data.node_names, Data.node_int_parameters, Data.node_positions,
                                    Data.path_names, Data.path_int_parameters, Data.path_float_parameters)
         return Heart.instance
+
+    # getter methods
+    def getNodeTable(self):
+        return self.m_node_table
+
+    def getPathTable(self):
+        return self.m_path_table
+
+    # setter methods
+    def setNodeTable(self, m_node_table):
+        self.m_node_table = m_node_table
+
+    def setPathTable(self, m_path_table):
+        self.m_path_table = m_path_table
 
     def heart_automaton(self):
         temp_node = self.m_node_table

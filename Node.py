@@ -23,6 +23,56 @@ class Node:
             "node_pos": node_pos
         }
 
+    # Getter method
+    def getParameters(self):
+        return self._node_para
+
+    # Setter method
+    def setParameters(self, parameters):
+        self._node_para = parameters
+    
+    def setNodeStateIndex(self, node_state_index):
+        self._node_para.node_state_index = node_state_index
+
+    def setTERP_current(self, TERP_current: int):
+        self._node_para.TERP_current = TERP_current
+
+    def setTERP_default(self, TERP_default: int):
+        self._node_para.TERP_default = TERP_default
+
+    def setTRRP_current(self, TRRP_current: int):
+        self._node_para.TRRP_current = TRRP_current
+
+    def setTRRP_default(self, TRRP_default: int):
+        self._node_para.TRRP_default = TRRP_default
+
+    def setTrest_current(self, Trest_current: int):
+        self._node_para.Trest_current = Trest_current
+
+    def setTrest_default(self, Trest_default: int):
+        self._node_para.Trest_default = Trest_default
+
+    def setActivation(self, activation: bool):
+        self._node_para.activation = activation
+
+    def setTerp_min(self, Terp_min: int):
+        self._node_para.Terp_min = Terp_min
+
+    def setTerp_max(self, Terp_max: int):
+        self._node_para.Terp_max = Terp_max
+
+    def setIndex_of_path_activate_the_node(self, index_of_path_activate_the_node: int):
+        self._node_para.index_of_path_activate_the_node = index_of_path_activate_the_node
+
+    def setAVness(self, AVness):
+        self._node_para.AVness = AVness
+
+    def setConnectedPaths(self, connected_paths):
+        self._node_para.connected_paths = connected_paths
+
+    def setNodePos(self, node_pos):
+        self._node_para.node_pos = node_pos
+
     def node_automaton(self, PT):
         t_activation = False
 
@@ -145,11 +195,14 @@ class Node:
                     self._node_para["TRRP_current"] -= 1
 
         self._node_para["activation"] = t_activation
+    
+    def setIndex_of_path_activate_node(index):
+        pass
 
 class NodeTable:
     def __init__(self, node_names, node_int_parameters, node_positions, PathTable):
         self.node_table = []
         for i in range(len(node_names)):
             path_terminal_pair1 = PathTable.path_terminal_pairs_per_point_list[i]
-            node1 = Node(node_names[i], node_int_parameters[i], path_terminal_pair1, node_positions[i])
-            self.node_table.append(node1)
+            node = Node(node_names[i], node_int_parameters[i], path_terminal_pair1, node_positions[i])
+            self.node_table.append(node)
